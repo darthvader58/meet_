@@ -39,6 +39,19 @@ export const GeneralTab = ({ id }: GeneralTabProps) => {
           fullWidth: true,
         }}
       />
+      <Field
+        type="switch"
+        label={t('preferences.reactionAnnouncements.label')}
+        description={t('preferences.reactionAnnouncements.description')}
+        isSelected={userPreferencesSnap.is_reaction_announcements_enabled}
+        onChange={(value) =>
+          (userPreferencesStore.is_reaction_announcements_enabled = value)
+        }
+        wrapperProps={{
+          noMargin: true,
+          fullWidth: true,
+        }}
+      />
     </TabPanel>
   )
 }

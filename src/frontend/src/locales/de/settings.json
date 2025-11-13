@@ -12,6 +12,10 @@
     "idleDisconnectModal": {
       "label": "Anrufe ohne Teilnehmer verlassen",
       "description": "Verlässt automatisch einen Anruf nach einigen Minuten, wenn kein anderer Teilnehmer beitritt"
+    },
+    "reactionAnnouncements": {
+      "label": "Reaktionen für Bildschirmleser ankündigen",
+      "description": "Bildschirmleser sprechen Reaktionen aus, wenn sie gese ndet werden (Barrierefreiheitsfunktion)"
     }
   },
   "audio": {

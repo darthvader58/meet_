@@ -12,6 +12,10 @@
     "idleDisconnectModal": {
       "label": "Quitter les appels sans autre participant",
       "description": "Vous fait quitter un appel au bout de quelques minutes si aucun autre participant ne vous rejoint"
+    },
+    "reactionAnnouncements": {
+      "label": "Annoncer les réactions pour les lecteurs d'écran",
+      "description": "Les lecteurs d'écran annonceront les réactions lorsqu'elles sont envoyées (fonction d'accessibilité)"
     }
   },
   "audio": {

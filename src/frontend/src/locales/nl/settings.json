@@ -12,6 +12,10 @@
     "idleDisconnectModal": {
       "label": "Verlaat oproepen zonder deelnemers",
       "description": "Verlaat automatisch een oproep na een paar minuten als geen andere deelnemer meedoet"
+    },
+    "reactionAnnouncements": {
+      "label": "Reacties aankondigen voor schermlezers",
+      "description": "Schermlezers kondigen reacties aan wanneer ze worden verzonden (toegankelijkheidsfunctie)"
     }
   },
   "audio": {

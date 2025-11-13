@@ -12,6 +12,10 @@
     "idleDisconnectModal": {
       "label": "Leave calls with no participants",
       "description": "Automatically leaves a call after a few minutes if no other participant joins"
+    },
+    "reactionAnnouncements": {
+      "label": "Announce reactions for screen readers",
+      "description": "Screen readers will announce reactions when they are sent (accessibility feature)"
     }
   },
   "audio": {

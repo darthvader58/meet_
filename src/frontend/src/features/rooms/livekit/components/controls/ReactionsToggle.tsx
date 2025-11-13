@@ -13,6 +13,8 @@ import {
 import { Toolbar as RACToolbar } from 'react-aria-components'
 import { Participant } from 'livekit-client'
 import useRateLimiter from '@/hooks/useRateLimiter'
+import { useSnapshot } from 'valtio'
+import { userPreferencesStore } from '@/stores/userPreferences'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export enum Emoji {
@@ -37,6 +39,7 @@ export const ReactionsToggle = () => {
   const [reactions, setReactions] = useState<Reaction[]>([])
   const instanceIdRef = useRef(0)
   const room = useRoomContext()
+  const userPreferencesSnap = useSnapshot(userPreferencesStore)
 
   const [isVisible, setIsVisible] = useState(false)
   const [announcement, setAnnouncement] = useState('')
@@ -61,24 +64,22 @@ export const ReactionsToggle = () => {
     setReactions((prev) => [...prev, newReaction])
 
     // Announce reaction to screen readers (with throttling to avoid overwhelming users)
-    const now = Date.now()
-    const shouldAnnounce =
-      !lastAnnouncementRef.current ||
-      lastAnnouncementRef.current.emoji !== emoji ||
-      now - lastAnnouncementRef.current.timestamp > 3000 // 3 seconds throttle
-
-    if (shouldAnnounce) {
-      const participantName = room.localParticipant.isLocal
-        ? t('you')
-        : room.localParticipant.name || ''
-      const emojiName = t(`emojis.${emoji}`)
-      setAnnouncement(t('announced', { name: participantName, emoji: emojiName }))
-      lastAnnouncementRef.current = { emoji, timestamp: now }
-
-      // Clear announcement after it's been read
-      setTimeout(() => setAnnouncement(''), 1000)
+    if (userPreferencesSnap.is_reaction_announcements_enabled) {
+      const now = Date.now()
+      const shouldAnnounce = 
+        !lastAnnouncementRef.current ||
+        lastAnnouncementRef.current.emoji !== emoji ||
+        now - lastAnnouncementRef.current.timestamp > 3000
+      if (shouldAnnounce) {
+        const participantName = room.localParticipant.isLocal
+          ? t('you')
+          : room.localParticipant.name || ''
+        const emojiName = t(`emojis.${emoji}`)
+        setAnnouncement(t('announcement', { name: participantName, emoji: emojiName }))
+        lastAnnouncementRef.current = { emoji, timestamp: now }
+        setTimeout(() => setAnnouncement(''), 1000) // Clear announcement after 1 second
+      }
     }
-
     // Remove this reaction after animation
     setTimeout(() => {
       setReactions((prev) =>
@@ -190,24 +191,26 @@ export const ReactionsToggle = () => {
       </div>
       <ReactionPortals reactions={reactions} />
       {/* ARIA live region for screen reader announcements */}
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        className={css({
-          position: 'absolute',
-          width: '1px',
-          height: '1px',
-          padding: 0,
-          margin: '-1px',
-          overflow: 'hidden',
-          clip: 'rect(0, 0, 0, 0)',
-          whiteSpace: 'nowrap',
-          border: 0,
-        })}
-      >
-        {announcement}
-      </div>
+      {userPreferencesSnap.is_reaction_announcements_enabled && (
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className={css({
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            margin: '-1px',
+            padding: '0',
+            overflow: 'hidden',
+            clip: 'rect(0 0 0 0)',
+            border: '0',
+            whitespace: 'nowrap',
+          })}
+        >
+          {announcement}
+        </div>
+      )}
     </>
   )
 }
