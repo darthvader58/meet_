@@ -1,4 +1,3 @@
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -9,4 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
-- 🔧(backend) support `_FILE` for secret environment variables #566 
+## [1.0.1] - 2025-12-17
+
+### Changed
+
+- ♿(frontend) improve accessibility:
+- ♿️(frontend) hover controls, focus, SR #803
+- ♿️(frontend) change ptt keybinding from space to v #813
+- ♿(frontend) indicate external link opens in new window on feedback #816 
+- ♿(frontend) fix heading level in modal to maintain semantic hierarchy #815
+- ♿️(frontend) Improve focus management when opening and closing chat #807
